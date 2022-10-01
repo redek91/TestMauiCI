@@ -37,6 +37,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
+      - name: Set upload_url output
+        id: step_upload_url
+        run: echo "::set-output name=upload_url::${{ steps.create_release.outputs.upload_url }}"
+
+      - name: Set release_id output
+        id: step_release_id
+        run: echo "::set-output name=release_id::${{ steps.create_release.outputs.id }}"
+
   # MAUI Android Build
   build-android:
     runs-on: windows-2022
