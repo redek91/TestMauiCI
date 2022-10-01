@@ -68,13 +68,19 @@ jobs:
       - name: Build MAUI Android
         run: dotnet publish TestApp/TestApp.csproj -c Release -f net6.0-android --no-restore
 
+      - name: Get artifact path
+        id: artifact_path
+        run: |
+          BUILD_ARTIFACT=$((ls TestApp/bin/Release/net6.0-android/*Signed.apk).FullName)
+          echo "::set-output name=artifact_path::$BUILD_ARTIFACT"
+
       - name: Upload Android artifact
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ needs.create-draft-release.outputs.upload_url }}
-          asset_path: TestApp/bin/Release/net6.0-android/*Signed.apk
+          asset_path: ${{ steps.artifact_path.artifact_path }}
           asset_name: TestApp-Android-${{ github.ref }}.apk
           asset_content_type: application/apk
 
@@ -101,13 +107,19 @@ jobs:
       - name: Build MAUI Windows
         run: dotnet publish TestApp/TestApp.csproj -c Release -f net6.0-windows10.0.19041.0 --no-restore
 
+      - name: Get artifact path
+        id: artifact_path
+        run: |
+          BUILD_ARTIFACT=$((ls TestApp/bin/Release/net6.0-windows10.0.19041.0/win10-x64/AppPackages/TestApp*/TestApp*.msix).FullName)
+          echo "::set-output name=artifact_path::$BUILD_ARTIFACT"
+
       - name: Upload Windows artifact
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ needs.create-draft-release.outputs.upload_url }}
-          asset_path: TestApp/bin/Release/net6.0-windows10.0.19041.0/win10-x64/AppPackages/TestApp*/TestApp*.msix
+          asset_path: ${{ steps.artifact_path.artifact_path }}
           asset_name: TestApp-Windows-${{ github.ref }}.msix
           asset_content_type: application/msix
 
@@ -134,13 +146,19 @@ jobs:
       - name: Build MAUI iOS
         run: dotnet build TestApp/TestApp.csproj -c Release -f net6.0-ios --no-restore /p:buildForSimulator=True /p:packageApp=True /p:ArchiveOnBuild=False
 
+      - name: Get artifact path
+        id: artifact_path
+        run: |
+          BUILD_ARTIFACT=$(ls TestApp/bin/Release/net6.0-ios/iossimulator-x64/**/*.app)
+          echo "::set-output name=artifact_path::$BUILD_ARTIFACT"
+
       - name: Upload iOS artifact
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ needs.create-draft-release.outputs.upload_url }}
-          asset_path: TestApp/bin/Release/net6.0-ios/iossimulator-x64/**/*.app
+          asset_path: ${{ steps.artifact_path.artifact_path }}
           asset_name: TestApp-iOS-${{ github.ref }}.app
           asset_content_type: application/app
 
@@ -167,13 +185,19 @@ jobs:
       - name: Build MAUI MacCatalyst
         run: dotnet publish TestApp/TestApp.csproj -c Release -f net6.0-maccatalyst --no-restore -p:BuildIpa=True
 
+      - name: Get artifact path
+        id: artifact_path
+        run: |
+          BUILD_ARTIFACT=$(ls TestApp/bin/Release/net6.0-maccatalyst/maccatalyst-x64/publish/*.pkg)
+          echo "::set-output name=artifact_path::$BUILD_ARTIFACT"
+
       - name: Upload MacCatalyst artifact
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ needs.create-draft-release.outputs.upload_url }}
-          asset_path: TestApp/bin/Release/net6.0-maccatalyst/maccatalyst-x64/publish/*.pkg
+          asset_path: ${{ steps.artifact_path.artifact_path }}
           asset_name: TestApp-Mac-${{ github.ref }}.pkg
           asset_content_type: application/pkg
 
