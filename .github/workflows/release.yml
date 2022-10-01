@@ -150,7 +150,7 @@ jobs:
       - name: Get artifact path
         id: artifact_path
         run: |
-          BUILD_ARTIFACT=$(ls TestApp/bin/Release/net6.0-ios/iossimulator-x64/**/*.app)
+          BUILD_ARTIFACT=$(ls TestApp/bin/Release/net6.0-ios/iossimulator-x64/TestApp.dll)
           echo "Artifact path is $BUILD_ARTIFACT"
           echo "::set-output name=artifact_path::$BUILD_ARTIFACT"
 
