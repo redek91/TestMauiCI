@@ -18,6 +18,9 @@ jobs:
     name: build_release
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.2
+
       - name: release
         uses: actions/create-release@v1
         id: create_release
