@@ -72,6 +72,7 @@ jobs:
         id: artifact_path
         run: |
           $BUILD_ARTIFACT=$((ls TestApp/bin/Release/net6.0-android/*Signed.apk).FullName)
+          echo "Artifact path is $BUILD_ARTIFACT"
           echo "::set-output name=artifact_path::$BUILD_ARTIFACT"
 
       - name: Upload Android artifact
@@ -111,6 +112,7 @@ jobs:
         id: artifact_path
         run: |
           $BUILD_ARTIFACT=$((ls TestApp/bin/Release/net6.0-windows10.0.19041.0/win10-x64/AppPackages/TestApp*/TestApp*.msix).FullName)
+          echo "Artifact path is $BUILD_ARTIFACT"
           echo "::set-output name=artifact_path::$BUILD_ARTIFACT"
 
       - name: Upload Windows artifact
@@ -150,6 +152,7 @@ jobs:
         id: artifact_path
         run: |
           BUILD_ARTIFACT=$(ls TestApp/bin/Release/net6.0-ios/iossimulator-x64/**/*.app)
+          echo "Artifact path is $BUILD_ARTIFACT"
           echo "::set-output name=artifact_path::$BUILD_ARTIFACT"
 
       - name: Upload iOS artifact
@@ -189,6 +192,7 @@ jobs:
         id: artifact_path
         run: |
           BUILD_ARTIFACT=$(ls TestApp/bin/Release/net6.0-maccatalyst/maccatalyst-x64/publish/*.pkg)
+          echo "Artifact path is $BUILD_ARTIFACT"
           echo "::set-output name=artifact_path::$BUILD_ARTIFACT"
 
       - name: Upload MacCatalyst artifact
