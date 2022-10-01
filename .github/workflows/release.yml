@@ -172,7 +172,7 @@ jobs:
     needs: [create-draft-release, build-android, build-ios, build-windows, build-mac]
     steps:
       - name: Publish draft
-      - uses: eregon/publish-release@v1
+        uses: eregon/publish-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
